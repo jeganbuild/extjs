@@ -23,3 +23,18 @@ Ext.define("Verizon.view.HomePanel",{
 
 	       ]
 });
+
+
+Ext.define("Verizon.view.home.WestHomePanel",{
+	extend : "Ext.panel.Panel",
+	xtype : "westhomepanel",
+	title : "************",
+	html : "West Region",
+	height:300,width:100,
+	
+	items:[
+	       {
+	    	   xtype : "button",
+	    	   text:"WEST"
+	       }]
+});

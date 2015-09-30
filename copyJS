@@ -1,0 +1,95 @@
+index.html
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="extjs/resources/css/ext-all.css">
+	<script src="extjs/ext-all.js"></script>
+	<script src="app.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+
+app.js
+
+Ext.Loader.setConfig({enabled:true});
+
+Ext.application({
+	name:"Verizon",
+	appFolder: "app",//default
+	controllers:["LoginController","HomeController"],
+		launch:function(){
+			//alert("************");
+			//this.mainPanel=	Ext.create("Ext.panel.Panel",{
+			this.viewport=	Ext.create("Ext.container.Viewport",{ //resize panel  (scroll bar)
+			renderTo:  Ext.getBody(),
+			layout: "card",
+			items:[
+			       {xtype:"loginpanel"}
+			       ]
+			});
+		}	
+		});
+		
+Login panel
+
+Ext.define("Verizon.view.LoginPanel",{
+	extend:"Ext.panel.Panel",
+	xtype:"loginpanel",
+	title:"Login",
+	height:500,width:500,
+	items:[
+	       {
+	    	   xtype : "textfield",
+	    	   fieldLabel:"UserName",
+	    	   id:"name"
+	    		   
+	       },
+	       {
+	    	   xtype : "textfield",
+	    	   fieldLabel:"Password",
+	    	   id:"pass"
+	       },
+	       {
+	    	   xtype : "button",
+	    	   text:"Login",
+	    	   id:"login"
+	       }
+	       
+	       ]
+
+	
+});
+
+LoginController.js
+Ext.define("Verizon.controller.LoginController",{
+	extend:"Ext.app.Controller",
+	views:["LoginPanel","HomePanel"],
+	models:[],
+	stores:[],
+	refs:[
+	      {ref:"userName",  selector:"#name"},
+	      {ref:"passWord", selector:"#pass"}
+	      ],
+	      /*[
+       	{ref:"userName",selector:"loginpanel textfield[id=usernametext]"},
+       	{ref:"password",selector:"loginpanel textfield[id=passwordtext]"},
+       	{ref:"loginButton",selector:"loginpanel button[text=Submit]"}
+      ],*/
+
+	init:function(){
+		this.control({
+			"#login":{
+			click:this.clicked
+			}
+		});
+	},
+	clicked:function(){
+		this.application.viewport.add({xtype:"homepanel",id:"homepanel",height:600,width:600});
+		this.application.viewport.getLayout().setActiveItem("homepanel");
+
+		alert(this.getUserName().getValue());
+		alert(this.getPassWord().getValue());
+	}
+});
